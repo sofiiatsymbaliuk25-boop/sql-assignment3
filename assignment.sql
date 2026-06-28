@@ -104,3 +104,17 @@ BEGIN
 END;
 $$;
  
+--task5
+CREATE OR REPLACE FUNCTION trigger_log_order_creation()
+RETURNS TRIGGER AS $$
+
+BEGIN
+    INSERT INTO order_log (order_id, customer_id, action)
+    VALUES (NEW.order_id, NEW.customer_id, 'Orrder is created');
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+CREATE TRIGGER trigger_order_log
+AFTER INSERT ON orders
+
+FOR EACH ROW EXECUTE FUNCTION trigger_log_order_creation(); 

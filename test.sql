@@ -30,3 +30,14 @@ UPDATE orders SET total_amount = calculate_order_total(2) WHERE order_id = 2;
 CALL add_product_to_order(3, 4, 2);
 UPDATE orders SET total_amount = calculate_order_total(3) WHERE order_id = 3;
 
+--task 5
+SELECT * FROM order_log;
+
+--
+SELECT 
+    o.order_id, 
+    c.full_name, 
+    o.total_amount, 
+    o.order_date
+FROM orders o
+JOIN customers c ON o.customer_id = c.customer_id;
