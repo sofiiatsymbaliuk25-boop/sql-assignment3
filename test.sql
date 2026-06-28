@@ -17,3 +17,16 @@ CALL create_order(2);
 CALL create_order(3);
 
 SELECT * FROM orders;
+
+--task 3
+CALL add_product_to_order(1, 1, 1);
+CALL add_product_to_order(1, 2, 2);
+UPDATE orders SET total_amount = calculate_order_total(1) WHERE order_id = 1;
+
+CALL add_product_to_order(2, 3, 1);
+CALL add_product_to_order(2, 5, 3);
+UPDATE orders SET total_amount = calculate_order_total(2) WHERE order_id = 2;
+
+CALL add_product_to_order(3, 4, 2);
+UPDATE orders SET total_amount = calculate_order_total(3) WHERE order_id = 3;
+

@@ -65,3 +65,42 @@ BEGIN
 	END IF;
 END; 
 $$;
+
+--task3(Procedure: Add Product to Order)
+CREATE OR REPLACE PROCEDURE add_product_to_order(
+    p_order_id int,
+    p_product_id int,
+    p_quantity int
+)
+LANGUAGE plpgsql AS $$
+DECLARE
+    current_price numeric(10,2);
+    product_stock int;
+BEGIN
+    IF p_quantity <= 0 THEN
+        RAISE EXCEPTION 'Product quantity leass than 0';
+    END IF;
+
+    SELECT price, stock_quantity INTO current_price, product_stock
+    FROM products
+    WHERE product_id = p_product_id;
+
+    IF NOT FOUND THEN
+        RAISE EXCEPTION 'Product is not found(';
+    END IF;
+
+    IF product_stock < p_quantity THEN
+        RAISE EXCEPTION 'There is a bigger quantity than it`s available on stock';
+    END IF;
+
+    UPDATE products
+    SET stock_quantity = stock_quantity - p_quantity
+    WHERE product_id = p_product_id;
+
+    INSERT INTO order_items (order_id, product_id, quantity, price)
+    VALUES (p_order_id, p_product_id, p_quantity, current_price);
+
+    RAISE NOTICE 'Product was added to order %', p_order_id;
+END;
+$$;
+ 
