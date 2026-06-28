@@ -11,3 +11,4 @@ There is a creation of 5 tables customers, products, orders, order_items, order_
 2. Task2: if the customer does not exist, so the procedure calls an exception. Generally it just creates a new order record into orders table.
 3. Task3: Procedure checks quantity of the product if it is bigger than 0 and it`s availability on stock. It updates the product_stock and inserts a product into order_items table.
 4. Task5: Trigger executes only if the new row into orders table was inserted. 
+
